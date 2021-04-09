@@ -1,6 +1,6 @@
 import os
-from baselines import logger
-from baselines.common.vec_env import VecEnvWrapper
+from util import logger
+from util.vec_env import VecEnvWrapper
 from gym.wrappers.monitoring import video_recorder
 
 

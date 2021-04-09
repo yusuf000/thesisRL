@@ -136,6 +136,7 @@ def learn(env,
         manager = tf.train.CheckpointManager(ckpt, load_path, max_to_keep=None)
         ckpt.restore(manager.latest_checkpoint)
         print("Restoring from {}".format(manager.latest_checkpoint))
+        return model
 
     # Create the replay buffer
     if prioritized_replay:
@@ -231,5 +232,11 @@ def learn(env,
             logger.record_tabular("mean 100 episode reward", mean_100ep_reward)
             logger.record_tabular("% time spent exploring", int(100 * exploration.value(t)))
             logger.dump_tabular()
+
+    if save_path is not None:
+        save_path = osp.expanduser(save_path)
+        ckpt = tf.train.Checkpoint(model=model)
+        manager = tf.train.CheckpointManager(ckpt, save_path, max_to_keep=None)
+        manager.save()
 
     return model
