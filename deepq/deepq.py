@@ -26,6 +26,8 @@ def learn(env,
           train_freq=1,
           batch_size=32,
           print_freq=100,
+          useIddfs=False,
+          iddfsDept=15,
           checkpoint_freq=10000,
           checkpoint_path=None,
           learning_starts=1000,
@@ -240,3 +242,6 @@ def learn(env,
         manager.save()
 
     return model
+
+def getIdfsAction(currentObs, env, actions, dept):
+    new_obs, rew, done, _ = env.step(currentObs)
